@@ -1,0 +1,61 @@
+<!-- NOTE: YOU CAN TECHNICALLY RUN ANYTHING IN THE <notification> FIELD, BUT IT'S SAFEST TO JUST USE IT FOR NOTIFICATIONS -->
+<!-- FORBIDDEN CHARS: &lt; &gt;	&amp; &apos; &quot; %ID EXPANDS INTO SITE IDS-->
+<sites>
+    <notification type="success">sh /path/to/success/script</notification>
+    <notification type="failure">sh /path/to/failure/script/</notification>
+    <site name="Transfer to local filesystem" id="LOCAL">
+        <source type="local" preserve_dir="false">/home/jay/stuf/configs</source>
+        <destination type="local">/home/jay/.config</destination>
+        <flags>
+            <flag>azvP</flag>
+        </flags>
+        <filters>
+            <filter type="include">path_to_include</filter>
+            <filter type="exclude">path_to_exclude</filter>
+        </filters>
+    </site>
+    <site name="Transfer to external drive" id="EXTERNAL">
+        <source type="local" preserve_dir="false">/source/dir</source>
+        <destination type="external_drive">/destination/dir</destination>
+        <flags>
+            <flag>azvP</flag>
+            <flag is_long="true">delete-before</flag>
+            <flag is_long="true">delete-excluded</flag>
+        </flags>
+        <filters>
+            <filter type="include">path_to_include</filter>
+            <filter type="exclude">path_to_exclude</filter>
+        </filters>
+    </site>
+    <site name="Make local snapshot" id="SNAPSHOT">
+        <source type="local" preserve_dir="false">/source/dir</source>
+        <destination type="local" snapshot="true">/destination/dir</destination>
+        <params>
+            <param type="snap_base">snapshot_prefix.</param>
+            <param type="snap_extension">DATE</param>
+        </params>
+        <flags>
+            <flag>azvP</flag>
+            <flag is_long="true">delete-before</flag>
+            <flag is_long="true">delete-excluded</flag>
+        </flags>
+        <filters>
+            <filter type="include">path_to_include</filter>
+            <filter type="exclude">path_to_exclude</filter>
+        </filters>
+    </site>
+    <site name="Transfer to remote host via SSH" id="SSH">
+        <source type="local" preserve_dir="false">/source/dir</source>
+        <destination type="remote_server">[username@]domain.name:/destination/dir</destination>
+        <params>
+            <param type="ssh_username">remote host username</param>
+            <param type="ssh_port">SSH port (usually 22)</param>
+            <param type="ssh_key_location">key location (usually ~/.ssh/keyname)</param>
+        </params>
+        <flags>
+            <flag>rtvzP</flag>
+            <flag is_long="true">delete-before</flag>
+            <flag is_long="true">delete-excluded</flag>
+        </flags>
+    </site>
+</sites>
